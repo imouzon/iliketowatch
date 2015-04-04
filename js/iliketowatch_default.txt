@@ -1,0 +1,19 @@
+var folder = \"folderarg\";
+var browser = Application(\"browser.arg\");
+var file = \"file.var\"
+
+var fileopen = 0;
+for (var i in browser.windows){
+   for (var j in browser.windows[i].tabs){
+      var curr_url = String(browser.windows[i].tabs[j].url());
+      if(curr_url.indexOf(folder) > -1){
+         console.log(\"Reloading \" + curr_url);
+         browser.windows[i].tabs[j].reload();
+      }
+      if(curr_url.indexOf(file) > -1)
+         fileopen = 1;
+   }
+}
+if(fileopen < 1){
+   browser.windows[0].open(file);
+}
