@@ -113,6 +113,27 @@ Right now I have only tested in a few situations, but I am certain you need:
 
 I will try to get everything more general in the future, but at the moment this specific set up is required.
 
+##Options
+###Setting the browser
+You can set the browser using
+```vim
+"For Google Chrome
+let g:iliketowatch_browser = "chrome"
+
+"For Google Chrome Canary
+let g:iliketowatch_browser = "canary"
+
+"For Safari
+let g:iliketowatch_browser = "safari"
+```
+
+###Bundle directory
+At the moment, iliketowatch assumes that plugins are stored under `~/.vim/bundle/`.
+If that is not the case, setting the path to your plugins can be done using:
+```vim
+let g:iliketowatch_plugindir = "/path/to/vim/plugins/"
+```
+
 ##To Do
 At the moment this is tailor-built for my purposes. 
 I may expand it in the future if time permits (keep watching).

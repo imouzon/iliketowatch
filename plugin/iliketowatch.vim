@@ -23,7 +23,7 @@ if !exists("g:iliketowatch_plugindir")
 endif
  
 "Manage which folders are being watched
-function! s:WatchFolders_iliketowatch(...)
+function! g:WatchFolders_iliketowatch(...)
    "determine which root folder we should be watching
    if a:0 == 0 
       let iliketowatch_this = expand("%:p:h")
@@ -32,20 +32,30 @@ function! s:WatchFolders_iliketowatch(...)
    endif
 
    "check for duplicate entries unless no folders are being watched yet
-   let iliketowatch_newroot = 0
-
    "check that we aren't already watching this folder
-   if len("g:iliketowatch_roots") > 0
+   "and remove folders we are watching that are contained by this folder
+   let iliketowatch_newroot = 0
+   let N = len(g:iliketowatch_roots)
+   let stopwatching_list = []
+
+   if N > 0
+      let i = N 
       "we are already watching some roots so make sure this isn't a repeat
-      for iliketowatch_root in g:iliketowatch_roots
+      while i > 0 
+         let i = i - 1
          "match(dir_a,dir_b) = 0 if dir_a is under dir_b
-         if match(iliketowatch_this,iliketowatch_root) > -1
+         if match(iliketowatch_this,g:iliketowatch_roots[i]) > -1
             "then iliketowatch_newroot isn't zero anymore
             let iliketowatch_newroot = iliketowatch_newroot + 1
+         else 
+            if match(g:iliketowatch_roots[i],iliketowatch_this) > -1
+               "then this directory contains element [i] from the list
+               call remove(g:iliketowatch_roots,i)
+            endif
          endif
-      endfor
+      endwhile
    endif
-      
+
    "iliketowatch_newroot = 0 if the root is new
    "                     = 1 if the root is not new
    if iliketowatch_newroot == 0
@@ -59,17 +69,59 @@ function! s:WatchFolders_iliketowatch(...)
    let g:iliketowatch_roots = uniq(sort(g:iliketowatch_roots))
 endfunction
 
+function! g:StopWatching_iliketowatch(...)
+   if a:0 == 0
+      let g:iliketowatch_roots = []
+   else
+      "check for duplicate entries unless no folders are being watched yet
+      "check that we aren't already watching this folder
+      "and remove folders we are watching that are contained by this folder
+      let N = len(g:iliketowatch_roots)
+      let stopwatching_list = []
+      let iliketowatch_stop = a:1
+
+      if N > 0
+         let i = N 
+         "we are already watching some roots so make sure this isn't a repeat
+         while i > 0 
+            let i = i - 1
+            if match(g:iliketowatch_roots[i],iliketowatch_stop) > -1
+               "then this directory contains element [i] from the list
+               call remove(g:iliketowatch_roots,i)
+            endif
+         endwhile
+      endif
+   endif
+endfunction
+
+"write these as commands
+command! -nargs=? Iliketowatch call g:WatchFolders_iliketowatch(<f-args>)
+ab iliketowatch Iliketowatch
+
+command! -nargs=? Nodontwatch call g:WatchFolders_iliketowatch(<f-args>)
+ab nodontwatch Nodontwatch 
+
+
+   
+
+let g:iliketowatch_JSenv = "osascript -l JavaScript"
+let g:iliketowatch_JSfile = "iliketowatch.js"
 "Run JS for current files root project directory
-function! s:RunJS_iliketowatch()
+function! g:RunJS_iliketowatch()
    let folderarg = expand("%:p:h")
    for iliketowatch_root in g:iliketowatch_roots
       "if there is a partial match
       if match(folderarg,iliketowatch_root) > -1
          "then we need to refresh these roots
-         let call_temp = "osascript -l JavaScript iliketowatch.js ".g:iliketowatch_browser." ".folderarg
+         let call_temp = g:iliketowatch_JSenv." ".g:iliketowatch_plugindir.g:iliketowatch_JSfile." ".g:iliketowatch_browser." ".folderarg
          silent call system(call_temp)
          execute  
       endif
    endfor
 endfunction
+"check for watching automatically
+autocmd Bufwritepost,filewritepost call g:RunJS_iliketowatch()
 
+"force a refresh
+command! Ihavetowatch call g:RunJS_iliketowatch(<f-args>)
+ab ihavetowatch Ihavetowatch
