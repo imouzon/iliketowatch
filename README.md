@@ -107,11 +107,18 @@ Using [Vundle](https://github.com/gmarik/Vundle.vim) from inside Vim:
 ##Requirements
 Right now I have only tested in a few situations, but I am certain you need:
 
-- OSX
-- Yosemite
-- Chrome or Safari as your default browser
+- OS X Yosemite
+- Chrome or Safari
 
 I will try to get everything more general in the future, but at the moment this specific set up is required.
+At the moment, this plugin uses javascript and the Javascript for Automation tool set that comes
+packaged with Apple's Yosemite operating system. 
+Out of the box, this means that the code must be called using `oascript`. 
+It may be possible to modify the code slightly and make it work using 
+node as in [OSA](https://www.npmjs.com/package/osa) but I haven't tested this completely yet.
+
+The package assumes that the plugin is installed under `~/.vim/bundle/`, the default for Vundle,
+though this is modifiable (see the options below).
 
 ##Options
 ###Setting the browser
