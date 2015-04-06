@@ -102,8 +102,6 @@ command! -nargs=? Nodontwatch call g:WatchFolders_iliketowatch(<f-args>)
 ab nodontwatch Nodontwatch 
 
 
-   
-
 let g:iliketowatch_JSenv = "osascript -l JavaScript"
 let g:iliketowatch_JSfile = "iliketowatch.js"
 "Run JS for current files root project directory
@@ -119,9 +117,10 @@ function! g:RunJS_iliketowatch()
       endif
    endfor
 endfunction
-"check for watching automatically
-autocmd Bufwritepost,filewritepost call g:RunJS_iliketowatch()
 
 "force a refresh
 command! Ihavetowatch call g:RunJS_iliketowatch(<f-args>)
 ab ihavetowatch Ihavetowatch
+
+"refreshing automatically
+autocmd Bufwritepost,filewritepost * call g:RunJS_iliketowatch()
