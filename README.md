@@ -2,9 +2,8 @@ iliketowatch: Automatically reload pages as you edit them in Vim
 ================================================================
 - [Introduction](#introduction)
 - [Usage](#usage)
-- [Installation](#installation)
-- [options](#options)
-- [requirements](#requirements)
+- [Installation and Requirements](#installation)
+- [Options](#options)
 - [To Do](#todo)
 
 #Introduction 
@@ -105,7 +104,7 @@ Using [Vundle](https://github.com/gmarik/Vundle.vim) from inside Vim:
 :PluginInstall 'imouzon/iliketowatch'
 ```
 
-##Requirements
+###Requirements
 Right now I have only tested in a few situations, but I am certain you need:
 
 - OS X Yosemite
