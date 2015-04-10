@@ -1,7 +1,7 @@
 iliketowatch: Automatically reload pages as you edit them in Vim
 ================================================================
 - [Introduction](#introduction)
-- [Usage](#usage)
+- [Usage](#using iliketowatch)
 - [Installation and Requirements](#installation)
 - [Options](#options)
 - [To Do](#todo)
