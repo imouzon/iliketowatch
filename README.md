@@ -5,8 +5,7 @@ iliketowatch: Automatically reload pages as you edit them in Vim
 - [Commands](#requirements)
 - [To Do](#todo)
 
-Introduction 
-============
+#Introduction 
 ##Don't click away your focus
 One of the many benefits of working on modular documents and webpages that can be 
 rendered in a browser is the chance to see your progress as you work.
