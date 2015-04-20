@@ -98,7 +98,7 @@ endfunction
 command! -nargs=? Iliketowatch call g:WatchFolders_iliketowatch(<f-args>)
 ab iliketowatch Iliketowatch
 
-command! -nargs=? Nodontwatch call g:WatchFolders_iliketowatch(<f-args>)
+command! -nargs=? Nodontwatch call g:StopWatching_iliketowatch(<f-args>)
 ab nodontwatch Nodontwatch 
 
 
