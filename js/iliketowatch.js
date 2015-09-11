@@ -3,22 +3,26 @@
 //   Purpose:
 //
 //   Creation Date: 25-03-2015
-//   Last Modified: Mon Apr  6 14:07:46 2015
+//   Last Modified: Fri Sep 11 18:52:35 2015
 //   Created By:
 //----------------------------------------------------------------------------//
-
 //which browsers do we know
-var chromeBrowsers = ("chrome", "google chrome");
-var canaryBrowsers = ("canary", "chrome canary", "google chrome canary");
-var safariBrowsers = ("safari");
-var firefoxBrowsers = ("firefox", "mozilla");
-var KnownBrowsers = chromeBrowsers.concat(safariBrowsers,firefoxBrowsers);
+var chromeBrowsers = ["chrome", "google chrome"];
+var canaryBrowsers = ["canary", "chrome canary", "google chrome canary"];
+var safariBrowsers = ["safari"];
+var firefoxBrowsers = ["firefox", "mozilla"];
+var chromiumBrowsers = ["chromium"];
+var KnownBrowsers = chromeBrowsers.concat(canaryBrowsers,safariBrowsers,firefoxBrowsers,chromiumBrowsers);
 
 function run(argv) {
    //The first argument is the browser
-   browserArg = argv.splice(0,1);
+   var browser = String(argv.splice(0,1));
 
-   browser = (function(browserArg,KnownBrowsers){
+   //The second argument is the file location
+   var folder = argv.splice(0,1);
+
+   var browserID = (function(browserArg){
+
       switch(KnownBrowsers.indexOf(browserArg)){
          case 0:
          case 1:
@@ -37,23 +41,34 @@ function run(argv) {
          case 7:
             browser = "Firefox";
             break;
+         case 8:
+            browser = "Chromium";
       }
+
       return browser;
-   }(browserArg,KnownBrowsers));
+   }(browser));
 
-   var browser = Application(browser);
-   var folder = argv.splice(0,1);
+   var browser = Application(browserID);
 
-   var fileopen = 0;
    for (var i in browser.windows){
+
       for (var j in browser.windows[i].tabs){
-         var currURL = String(browser.windows[i].tabs[j].url());
+
+         var currURL = browser.windows[i].tabs[j].url();
+
          if(currURL.indexOf(folder) > -1){
-            console.log("Reloading " + currURL);
+
+            console.log("Reloading " + currURL + " (" + browserID + " window " + i + ", tab " + j + ")");
+
             browser.windows[i].tabs[j].reload();
+
+            delay(.2);
+
          }
+
+
       }
+
    }
-   
-   delay(1);
+
 }
