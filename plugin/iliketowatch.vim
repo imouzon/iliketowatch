@@ -129,17 +129,25 @@ endfunction
 " ## Running the App
 "Run JS for current files root project directory
 function! g:RunJS_iliketowatch()
-   let iliketowatch_JSenv = "osascript -l JavaScript"
-   let iliketowatch_JSfile = "iliketowatch.js"
+
+   "define the call commands
+   let JSenv = "osascript -l JavaScript"
+
+   "the file name
+   let JSfile = "iliketowatch.js"
+
+   "get the folder of the current file being saved
    let folderarg = expand("%:p:h")
+
    for iliketowatch_root in g:iliketowatch_roots
       "if there is a partial match
       if match(folderarg,iliketowatch_root) > -1
+
          "then we need to refresh these roots
-         let call_temp = g:iliketowatch_JSenv." ".g:iliketowatch_plugindir."js/".iliketowatch_JSfile." ".g:iliketowatch_browser." ".folderarg
-         echo call_temp
+         let call_temp = JSenv." ".g:iliketowatch_plugindir."js/".JSfile." ".g:iliketowatch_browser." ".folderarg
          silent call system(call_temp)
          "execute  
+         
       endif
    endfor
 endfunction
