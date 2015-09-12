@@ -8,7 +8,36 @@
 "  Created By: Ian Mouzon
 "--------------------------------------**--------------------------------------"
 
-"default browser is google chrome
+" Overview
+" ========
+
+" ## Important Variables 
+"
+" -  g:iliketowatch_browser: the browser being used 
+"    -  default: 'Google Chrome'
+"    -  can be set in the vimrc; see README.md for valid values
+"
+" -  g:iliketowatch_roots: list of the root directories being watched
+"    -  initially: empty
+"    -  entries are added by g:WatchFolders_iliketowatch(...)
+"    -  entries are removed by g:StopWatching_iliketowatch(...)
+"
+" -  g:iliketowatch_plugindir: the directory containing the plugin
+"    -  default: '~/.vim/bundle/iliketowatch/'
+"    -  can be set in the vimrc
+"    -  a weakness on my part, I don't know how to store the js properly
+"
+" -  g:iliketowatch_JSenv: how is the js file being called
+"    -  default: 'osascript -l JavaScript' (needs mac)
+
+" ## Commands for the user
+"
+" -  iliketowatch: Start watching the current folder and down
+" -  nodontwatch: Stop watching the current folder and down
+
+
+" ## Initialization
+" if the user has not set g:iliketowatch_browser then use Google Chrome
 if !exists("g:iliketowatch_browser")
    let g:iliketowatch_browser = "Google Chrome"
 endif
@@ -18,11 +47,13 @@ if !exists("g:iliketowatch_roots")
    let g:iliketowatch_roots = []
 endif
 
+" where is this plugin stored?
 if !exists("g:iliketowatch_plugindir")
    let g:iliketowatch_plugindir="~/.vim/bundle/iliketowatch/"
 endif
  
-"Manage which folders are being watched
+" ## Updating
+" ### Add new folder paths
 function! g:WatchFolders_iliketowatch(...)
    "determine which root folder we should be watching
    if a:0 == 0 
@@ -69,6 +100,7 @@ function! g:WatchFolders_iliketowatch(...)
    let g:iliketowatch_roots = uniq(sort(g:iliketowatch_roots))
 endfunction
 
+" ### remove folder paths
 function! g:StopWatching_iliketowatch(...)
    if a:0 == 0
       let g:iliketowatch_roots = []
@@ -94,33 +126,38 @@ function! g:StopWatching_iliketowatch(...)
    endif
 endfunction
 
-"write these as commands
+" ## Running the App
+"Run JS for current files root project directory
+function! g:RunJS_iliketowatch()
+   let iliketowatch_JSenv = "osascript -l JavaScript"
+   let iliketowatch_JSfile = "iliketowatch.js"
+   let folderarg = expand("%:p:h")
+   for iliketowatch_root in g:iliketowatch_roots
+      "if there is a partial match
+      if match(folderarg,iliketowatch_root) > -1
+         "then we need to refresh these roots
+         let call_temp = g:iliketowatch_JSenv." ".g:iliketowatch_plugindir."js/".iliketowatch_JSfile." ".g:iliketowatch_browser." ".folderarg
+         echo call_temp
+         silent call system(call_temp)
+         "execute  
+      endif
+   endfor
+endfunction
+
+
+" ## Commands for the user
+"
+" -  Start watching the current folder and down: iliketowatch
+" -  Stop watching the current folder and down:  nodontwatch 
 command! -nargs=? Iliketowatch call g:WatchFolders_iliketowatch(<f-args>)
 ab iliketowatch Iliketowatch
 
 command! -nargs=? Nodontwatch call g:StopWatching_iliketowatch(<f-args>)
 ab nodontwatch Nodontwatch 
 
-
-let g:iliketowatch_JSenv = "osascript -l JavaScript"
-let g:iliketowatch_JSfile = "iliketowatch.js"
-"Run JS for current files root project directory
-function! g:RunJS_iliketowatch()
-   let folderarg = expand("%:p:h")
-   for iliketowatch_root in g:iliketowatch_roots
-      "if there is a partial match
-      if match(folderarg,iliketowatch_root) > -1
-         "then we need to refresh these roots
-         let call_temp = g:iliketowatch_JSenv." ".g:iliketowatch_plugindir.g:iliketowatch_JSfile." ".g:iliketowatch_browser." ".folderarg
-         silent call system(call_temp)
-         execute  
-      endif
-   endfor
-endfunction
-
 "force a refresh
 command! Ihavetowatch call g:RunJS_iliketowatch(<f-args>)
 ab ihavetowatch Ihavetowatch
 
 "refreshing automatically
-autocmd Bufwritepost,filewritepost * call g:RunJS_iliketowatch()
+autocmd BufWritePost,FileWritePost * call g:RunJS_iliketowatch()
