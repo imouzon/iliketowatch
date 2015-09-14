@@ -104,8 +104,11 @@ Using [Vundle](https://github.com/gmarik/Vundle.vim) from inside Vim:
 :PluginInstall 'imouzon/iliketowatch'
 ```
 
-### Can I use `pathogen` or some other package manager instead?
-![no_and_the_game](http://github.com/imouzon.github.io/figure/no_and_the_game.gif)
+-  Can I use `pathogen` or some other package manager instead?
+
+![no_and_the_game](https://github.com/imouzon.github.io/figure/no_and_the_game.gif)
+
+![try 2](https://raw.githubusercontent.com/imouzon/imouzon.github.io/master/figure/no_and_the_game.gif)
 
 Just kidding - you do have to set an extra option though, see `idontliketowatch_plugindir` in the options section.
 
