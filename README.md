@@ -81,7 +81,7 @@ If you make changes to `blue-theme.css` then when you save your changes `iliketo
 tab displaying `document.js`. If you make changes to `title.png`, `iliketowatch` refreshes `document.html`
 If you edit and save a file outside of the path, `iliketowatch.js` does nothing.
 
-###nodontwatch to stop watching
+###`nodontwatch` to stop watching
 To stop watching for changes in a given path, use
 ```vim
 :nodontwatch \path\to\stop\watching
@@ -91,7 +91,7 @@ to stop watching all folders, simply use
 :nodontwatch
 ```
 
-###ihavetowatch forces a refresh for the current files project directory
+###`ihavetowatch` forces a refresh for the current files project directory
 Assuming we have already started watching the project structure an open file is in, using
 ```vim
 :ihavetowatch
@@ -149,7 +149,7 @@ I am currently (when I have the time) working on three goals:
 2.  The app does not work well in tmux because osascript and the JXA functions not work well in tmux. Since I use tmux consistently, this matters a lot to me.
 3.  Working on the JavaScript so that it can be run in node using the osx package - this way the add-on can travel to other operating systems.
 
-At the moment, though, `Iliketowatch` is tailor-built for my purposes. 
+At the moment, though, `iliketowatch` is tailor-built for my purposes. 
 
 I may expand it in the future if time permits (keep watching).
 
