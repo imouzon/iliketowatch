@@ -4,7 +4,7 @@ iliketowatch: Automatically reload pages as you edit them in Vim
 - [Usage](#usage)
 - [Installation and Requirements](#installation)
 - [Options](#options)
-- [To Do](#to do)
+- [Upcoming](#upcoming)
 
 #Introduction 
 ##Don't click away your focus
@@ -141,11 +141,17 @@ If that is not the case, setting the path to your plugins can be done using:
 let g:iliketowatch_plugindir = "/path/to/vim/plugins/"
 ```
 
-##To Do
-At the moment this is tailor-built for my purposes. 
+##Upcoming
+
+I am currently (when I have the time) working on three goals:
+
+1.  Adjusting the way the JS function is called so that using Vundle isn't required.
+2.  The app does not work well in tmux because osascript and the JXA functions not work well in tmux. Since I use tmux consistently, this matters a lot to me.
+3.  Working on the JavaScript so that it can be run in node using the osx package - this way the add-on can travel to other operating systems.
+
+At the moment, though, `Iliketowatch` is tailor-built for my purposes. 
+
 I may expand it in the future if time permits (keep watching).
-
-
 
 
 <!--
