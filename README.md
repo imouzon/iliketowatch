@@ -104,11 +104,29 @@ Using [Vundle](https://github.com/gmarik/Vundle.vim) from inside Vim:
 :PluginInstall 'imouzon/iliketowatch'
 ```
 
-###Requirements
-Right now I have only tested in a few situations, but I am certain you need:
+### Can I use `pathogen` or some other package manager instead?
+![no_and_the_game](http://github.com/imouzon.github.io/figure/no_and_the_game.gif)
 
-- OS X Yosemite
-- Chrome or Safari
+Just kidding - you do have to set an extra option though, see `idontliketowatch_plugindir` in the options section.
+
+
+###Requirements
+
+#### Operating system
+Right now `iliketowatch` has only tested in a few situations, but you certainly need OS X Yosemite or better (OS X version > 10.10.1).
+It has worked in Yosemite and El Capitan.
+
+#### Supported Browsers
+The following browsers are currently supported:
+
+-  Google Chrome
+-  Google Chrome Canary
+-  Chromium
+-  Firefox
+-  Safari
+
+Adding support for a new browser is not a complicated process at this point (just a switch in the JavaScript). 
+If you file an issue the browser will be added quickly.
 
 I will try to get everything more general in the future, but at the moment this specific set up is required.
 At the moment, this plugin uses javascript and the Javascript for Automation tool set that comes
@@ -126,6 +144,12 @@ You can set the browser using
 ```vim
 "For Google Chrome
 let g:iliketowatch_browser = "chrome"
+
+"For Firefox
+let g:iliketowatch_browser = "firefox"
+
+"For Chromium
+let g:iliketowatch_browser = "chromium"
 
 "For Google Chrome Canary
 let g:iliketowatch_browser = "canary"
@@ -152,7 +176,6 @@ I am currently (when I have the time) working on three goals:
 At the moment, though, `iliketowatch` is tailor-built for my purposes. 
 
 I may expand it in the future if time permits (keep watching).
-
 
 <!--
 .
